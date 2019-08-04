@@ -33,7 +33,7 @@ namespace CRUD_Razor_2_1.Pages.BookList
             _db.Books.Remove(book);
             await _db.SaveChangesAsync();
 
-            Message = "Book deleted successlly!";
+            Message = "Book deleted successfully!";
 
             return RedirectToPage("Index");
         }
