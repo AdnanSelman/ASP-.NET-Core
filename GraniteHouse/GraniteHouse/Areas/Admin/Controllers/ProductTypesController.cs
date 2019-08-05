@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GraniteHouse.Data;
+using GraniteHouse.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GraniteHouse.Areas.Admin.Controllers
@@ -19,6 +20,26 @@ namespace GraniteHouse.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View(_db.ProductTypes.ToList());
+        }
+
+        //GET Create action Method
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        //POST Create action Method
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ProductTypes product)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Add(product);
+                await _db.SaveChangesAsync();
+                return RedirectToPage(nameof(Index));
+            }
+            return View(product);
         }
     }
 }
