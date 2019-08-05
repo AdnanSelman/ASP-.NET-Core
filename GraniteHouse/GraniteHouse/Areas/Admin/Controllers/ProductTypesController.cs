@@ -37,7 +37,7 @@ namespace GraniteHouse.Areas.Admin.Controllers
             {
                 _db.Add(product);
                 await _db.SaveChangesAsync();
-                return RedirectToPage(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             return View(product);
         }
