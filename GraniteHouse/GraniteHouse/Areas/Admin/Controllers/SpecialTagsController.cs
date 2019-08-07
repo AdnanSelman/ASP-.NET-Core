@@ -9,17 +9,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace GraniteHouse.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductTypesController : Controller
+    public class SpecialTagsController : Controller
     {
         private readonly ApplicationDbContext _db;
 
-        public ProductTypesController(ApplicationDbContext db)
+        public SpecialTagsController(ApplicationDbContext db)
         {
             _db = db;
         }
         public IActionResult Index()
         {
-            return View(_db.ProductTypes.ToList());
+            return View(_db.SpecialTags.ToList());
         }
 
         //GET Create action Method
@@ -31,51 +31,51 @@ namespace GraniteHouse.Areas.Admin.Controllers
         //POST Create action Method
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProductTypes product)
+        public async Task<IActionResult> Create(SpecialTags special)
         {
             if (ModelState.IsValid)
             {
-                _db.Add(product);
+                _db.Add(special);
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(special);
         }
 
         //GET Edit action Method
         public async Task<IActionResult> Edit(int? id)
         {
-            if(id==null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var productType = await _db.ProductTypes.FindAsync(id);
+            var specialTags = await _db.SpecialTags.FindAsync(id);
 
-            if(productType==null)
+            if (specialTags == null)
             {
                 return NotFound();
             }
 
-            return View(productType);
+            return View(specialTags);
         }
 
         //POST Edit action Method
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ProductTypes product)
+        public async Task<IActionResult> Edit(int id, SpecialTags special)
         {
-            if(id!=product.Id)
+            if (id != special.Id)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                _db.Update(product);
+                _db.Update(special);
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(special);
         }
 
         //GET Details action Method
@@ -86,16 +86,15 @@ namespace GraniteHouse.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var productType = await _db.ProductTypes.FindAsync(id);
+            var specialTags = await _db.SpecialTags.FindAsync(id);
 
-            if (productType == null)
+            if (specialTags == null)
             {
                 return NotFound();
             }
 
-            return View(productType);
+            return View(specialTags);
         }
-
 
         //GET Delete action Method
         public async Task<IActionResult> Delete(int? id)
@@ -105,25 +104,25 @@ namespace GraniteHouse.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var productType = await _db.ProductTypes.FindAsync(id);
+            var specialTags = await _db.SpecialTags.FindAsync(id);
 
-            if (productType == null)
+            if (specialTags == null)
             {
                 return NotFound();
             }
 
-            return View(productType);
+            return View(specialTags);
         }
 
         //POST Delete action Method
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _db.ProductTypes.FindAsync(id);
-            _db.ProductTypes.Remove(product);
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            var special = await _db.SpecialTags.FindAsync(id);
+            _db.SpecialTags.Remove(special);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
