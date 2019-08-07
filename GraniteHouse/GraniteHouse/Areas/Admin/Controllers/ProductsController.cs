@@ -119,7 +119,7 @@ namespace GraniteHouse.Controllers
 
                 var productFromDb = _db.Products.Where(m => m.Id == ProductsVM.Products.Id).FirstOrDefault();
 
-                if (files[0].Length > 0 && files[0] != null)
+                if (files.Count > 0 && files[0] != null)
                 {
                     //if user uploads a new image
                     var uploads = Path.Combine(webRootPath, SD.ImageFolder);
@@ -152,6 +152,24 @@ namespace GraniteHouse.Controllers
 
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+
+            return View(ProductsVM);
+        }
+
+        //GET : Details
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ProductsVM.Products = await _db.Products.Include(m => m.SpecialTags).Include(m => m.ProductTypes).SingleOrDefaultAsync(m => m.Id == id);
+
+            if (ProductsVM.Products == null)
+            {
+                return NotFound();
             }
 
             return View(ProductsVM);
