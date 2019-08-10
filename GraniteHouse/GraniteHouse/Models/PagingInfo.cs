@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GraniteHouse.Models
 {
-    public class PaggingInfo
+    public class PagingInfo
     {
         public int TotalItems { get; set; }
 
